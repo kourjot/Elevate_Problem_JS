@@ -1,0 +1,63 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>Simple Table</title>
+</head>
+<body>
+
+  <h2>User Table</h2>
+
+  <table border="1" id="userTable">
+    <tr>
+      <th>Name</th>
+      <th>Email</th>
+      <th>Actions</th>
+    </tr>
+  </table>
+
+  <button onclick="addRow()">Add Row</button>
+
+  <script>
+    
+    function addRow() {
+    
+      let table = document.getElementById("userTable");
+
+      
+      let newRow = table.insertRow();
+
+      
+      let nameCell = newRow.insertCell(0);
+      let emailCell = newRow.insertCell(1);
+      let actionCell = newRow.insertCell(2);
+
+      nameCell.innerHTML = "<input type='text'>";
+      emailCell.innerHTML = "<input type='email'>";
+
+      
+      actionCell.innerHTML =
+        "<button onclick='editRow(this)'>Edit</button> " +
+        "<button onclick='deleteRow(this)'>Delete</button>";
+    }
+    function editRow(button) {
+      let row = button.parentNode.parentNode; 
+      let inputs = row.getElementsByTagName("input"); 
+      if (inputs[0].disabled) {
+        inputs[0].disabled = false;
+        inputs[1].disabled = false;
+        button.innerText = "Save";
+      } else {
+        inputs[0].disabled = true;
+        inputs[1].disabled = true;
+        button.innerText = "Edit";
+      }
+    }
+
+    function deleteRow(button) {
+      let row = button.parentNode.parentNode; 
+      row.remove();
+    }
+  </script>
+
+</body>
+</html>

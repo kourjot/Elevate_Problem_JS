@@ -1,0 +1,38 @@
+// Find all orders from New York.
+db.orders.find({"customerLocation":" New York"})
+
+// Find all orders where the category is 'Fiction'.
+
+db.orders.find({"category":"Fiction"})
+
+// Find all orders for the book 'The Great Gatsby'.
+
+db.orders.find({"book":"The Great Gatsby"})
+
+// Find orders placed on 2024-01-16.
+
+db.orders.find({date:ISODate("2024-01-16T00:00:00.000Z")})
+
+// Find all orders where the quantity is greater than 2.
+
+db.orders.find({"quantity":{$gt:2}})
+
+
+
+// Get all unique book titles that have been ordered.
+db.orders.distinct("book")
+// Find total number of books ordered (sum of all quantities).
+
+db.orders.aggregate([
+    {$group:{_id:null,totalBooks:{$sum:"$quantity"}}}
+])
+
+// Find orders where the price is between 20 and 40.
+
+// Get all orders from California that are in the Education category.
+
+// Project only the book and price fields from all documents.
+
+// Sort the orders by price in descending order.
+
+// Find all orders of the book 'MongoDB Mastery' and update the quantity to 5.

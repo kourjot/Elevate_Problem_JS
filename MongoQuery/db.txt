@@ -219,3 +219,20 @@ db.product.aggregate([
     }
 ])
 
+********************
+
+Find all users older than 30.
+
+db.users.find({age:{$gte:30}})
+
+Group users by status and return the average age per status.
+
+db.users.aggregate([
+    {
+        $group:{
+            _id:"$status",
+            avgprice:{$avg:"$age"}
+
+        }
+    }
+])

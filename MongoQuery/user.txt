@@ -1,0 +1,73 @@
+👤 Users Collection Questions
+
+Find all users who have the role "admin".
+
+db.users.find({roles:"admin"})
+
+*********************
+
+List users who logged in after "2025-04-01".
+
+db.users.find({
+    lastLogin: '2025-04-01T08:50:00Z',
+})
+
+******************
+
+Find the youngest user.
+
+db.users.find({
+    age:{
+        $gte:18,
+        $lte:25
+    }
+}).limit(1)
+
+**************************
+
+Count how many users have "active" status.
+
+
+db.users.countDocuments({status:"inactive"}) 
+
+**********************
+
+Retrieve all users sorted by age in ascending order.
+
+db.users.find().sort({age:1})
+
+
+*****************
+
+Find users who have both "user" and "moderator" roles.
+
+db.users.find({
+    roles:["user","moderator"]
+})
+
+
+
+**********************************
+
+Count how many users belong to each role.
+
+db.users.aggregate([
+    {
+        $group:{
+            _id:"$role",
+            count:{$sum:1}
+        }
+    }
+])
+
+***********************
+
+List the emails of users who are suspended.
+
+db.users.find({status: 'suspended'},{email:1,_id:0})
+
+
+***************************
+
+Find all users older than 30.
+

@@ -1,0 +1,221 @@
+### **2. Find All Products Above a Certain Price**
+
+**Question:** Retrieve all products from the `products` collection where the price is greater than $50.
+
+
+
+
+db.products.find({price:{$gt:50}})
+
+
+
+### **3. Update Product Stock**
+
+**Question:** Increase the stock by 20 for all products in the `products` collection belonging to the "electronics" category.
+
+**Query:**
+
+db.products.updateMany({category:"Fitness"},{$inc:{stock:20}})
+
+### **4. Aggregate Total Order Amount by User**
+
+**Question:** Calculate the total amount spent by each user in the `orders` collection.
+
+**Query:**
+
+
+db.orders.aggregate([
+    {
+        $group:{
+            _id:"$userId",
+            totalspend:{$sum: "$amount"}
+        }
+
+    }
+])
+
+
+### **5. Fetch Orders from a Specific City**
+
+**Question:** Retrieve all orders where the `shippingAddress.city` is "San Francisco".
+
+**Query:**
+
+db.orders.find({"shippingAddress.city":"Delhi"})
+
+
+
+### **6. Delete Inactive Users**
+
+**Question:** Remove all users from the `users` collection whose `status` is "inactive".
+
+**Query:**
+
+db.users.deleteMany({"status":"inactive"})
+
+
+### **7. Find Users with Specific Roles**
+
+**Question:** Retrieve all users who have "admin" as one of their roles.
+
+**Query:**
+
+
+db.users.find({"roles":"admin"})
+
+
+### **8. Create an Index on Product Name**
+
+**Question:** Add an index to the `name` field in the `products` collection to improve query performance.
+
+**Query:**
+
+
+db.products.createIndex({username:1})
+db.products.createIndex({ name: 1 });
+
+### **10. Join Orders with Users**
+
+**Question:** Use an aggregation query to fetch orders along with the user details for each order.
+
+**Query:**
+
+db.orders.aggregate([
+    {
+        $lookup:{
+            from :"users",
+            localField:"userId",
+            foreignField:"_id",
+            as:"user Data"
+        }
+    }
+])
+
+
+db.orders.aggregate([
+    { $lookup: {
+        from: "users",
+        localField: "userId",
+        foreignField: "_id",
+        as: "userDetails"
+    }}
+]);
+
+### **11. Count Products in Each Category**
+
+**Question:** Find the total number of products in each category.
+
+**Query:**
+
+db.products.aggregate([
+    {
+        $group:{
+            _id:"category",
+            totalamount:{$sum:1}
+        }
+    }
+
+])
+
+
+### **12. Calculate Average Order Value**
+
+**Question:** Compute the average order amount across all orders.
+
+**Query:**
+
+db.orders.aggregate([
+    {
+        $group:{
+            _id:null,
+            avg_orders:{$avg:"$amount"}
+        }
+    }
+])
+
+
+### **13. Retrieve Distinct Tags**
+
+**Question:** Get a list of all unique tags used in the `products` collection.
+
+**Query:**
+
+db.products.distinct("tags")
+
+
+### **14. Substring Search on User Name**
+
+**Question:** Find all users whose name starts with "Al".
+
+**Query:**
+{ <field>: { $regex: /pattern/, $options: '<options>' } }
+
+
+db.users.find({name:{
+    $regex:"^AI",$options:"i"
+}})
+
+
+### **15. Paginate Product Results**
+
+**Question:** Fetch products for page 3 with a page size of 10.
+
+**Query:**
+
+
+db.products.find().skip(20).limit(3)
+
+
+### **16. Query Orders within a Date Range**
+
+**Question:** Retrieve all orders placed between January 1, 2023, and March 31, 2023.
+
+**Query:**
+
+db.orders.find({
+    orderDate:{
+        $gte: ISODate('2025-01-01T00:00:00.000Z'),
+        $lte: ISODate('2025-03-31T00:00:00.000Z')
+    }
+})
+
+
+### **17. Find Low Stock Products**
+
+**Question:** Retrieve all products where the `stock` is less than 5.
+
+**Query:**
+
+db.products.find({
+    stock:{$lt:45}
+})
+
+
+
+### **18. Sort Users by Last Login**
+
+**Question:** Retrieve all users sorted by their `lastLogin` in descending order.
+
+**Query:**
+
+
+
+db.users.find().sort({lastLogin:-1})
+
+
+### **19. Aggregate Products with Total Stock**
+
+**Question:** Calculate the total stock available for each product category.
+
+**Query:**
+
+
+db.product.aggregate([
+    {
+        $group:{
+            _id:"$category",
+            totalStock:{$sum:"$stock"}
+        }
+    }
+])
+

@@ -1,0 +1,86 @@
+Find all products that belong to the category "Electronics".
+
+db.products.find({category:"Electronics"})
+
+
+******************************
+
+Retrieve all products with a stock count greater than 100.
+
+
+db.products.find({stock:{$gt:100}})
+
+
+******************************************
+
+List the names of products priced between 500 and 1000.
+
+db.products.find({
+    price:{$gte:500,
+    $lte:1000}
+
+})
+
+
+*************************
+
+Find all products that have the tag "wireless".
+db.products.find({
+    tags:"wireless"
+})
+
+**************************
+
+Count how many products are in each category.
+
+db.products.aggregate([
+    {
+        $group:{
+            _id:"$category",
+            data:{$sum:1}
+        }
+    }
+])
+
+****************
+
+Find the product with the highest price.
+
+db.products.find().sort({price:-1}).limit(1)
+
+
+*******************
+
+List all products sorted by price in descending order.
+
+db.products.find().sort({price:-1})
+
+******************
+
+Retrieve products that have both "mouse" and "computer" in their tags.
+
+db.products.find({
+    tags:{$all:["mouse","computer"]}
+})
+
+
+***********************
+
+Find products where the stock is not equal to 120.
+
+db.products.find({
+    stock:{$ne:120}
+})
+
+*********************
+
+Group the products by category and get the average price for each category.
+
+db.products.aggregate([
+    {
+        $group:{
+            _id:"$category",
+            avg:{$avg:"$price"}
+        }
+    }
+])
